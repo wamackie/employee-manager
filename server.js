@@ -19,8 +19,8 @@ const teamPrompt = () => {
             ]
         }
     ])
-    .then(function ({ option }) {
-        switch (option) {
+    .then(function (option) {
+        switch (option.menu) {
             case 'View All Departments':
                 viewDepartments();
                 break;
@@ -54,7 +54,31 @@ const teamPrompt = () => {
 
 function viewDepartments() {
     console.log('View All Departments\n')
-    const sql = `SELECT * FROM department`;
+    const sql = `SELECT * FROM department;`
+}
+
+function viewRoles() {
+
+}
+
+function viewEmployees() {
+
+}
+
+function addDepartment() {
+
+}
+
+function addRole() {
+
+}
+
+function addEmployee() {
+
+}
+
+function updateEmployeeRole() {
+    
 }
 
 
