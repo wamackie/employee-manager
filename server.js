@@ -1,27 +1,61 @@
-const express = require('express');
-const router = express.router();
-const db = require('./db/connection');
+const inquirer = require('inquirer');
+const mysql = require("mysql2");
+const connection = require('./db/connection');
 
-const PORT = process.env.PORT || 3001;
-const app = express();
+const teamPrompt = () => {
+    inquirer.prompt([
+        {
+            name: 'menu',
+            type: 'list',
+            message: 'What would you like to do?',
+            choices: [
+                'View All Departments',
+                'View All Roles',
+                'View All Employees',
+                'Add Department',
+                'Add Role',
+                'Add Employee',
+                'Update Employee Role'
+            ]
+        }
+    ])
+    .then(function ({ option }) {
+        switch (option) {
+            case 'View All Departments':
+                viewDepartments();
+                break;
+            
+            case 'View All Roles':
+                viewRoles();
+                break;
 
-// Express middleware
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
+            case 'View All Employees':
+                viewEmployees();
+                break;
 
-// Use apiRoutes
-app.use('/api', apiRoutes);
+            case 'Add Department':
+                addDepartment();
+                break;
 
-// Default response for any other request (Not Found)
-app.use((req, res) => {
-  res.status(404).end();
-});
+            case 'Add Role':
+                addRole();
+                break;
 
-// Start server after DB connection
-db.connect(err => {
-  if (err) throw err;
-  console.log('Database connected.');
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-  });
-});
+            case 'Add Employee':
+                addEmployee();
+                break;
+
+            case 'Update Employee Role':
+                updateEmployeeRole();
+                break;
+        }
+    })
+}
+
+function viewDepartments() {
+    console.log('View All Departments\n')
+    const sql = `SELECT * FROM department`;
+}
+
+
+teamPrompt()
