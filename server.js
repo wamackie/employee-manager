@@ -1,6 +1,7 @@
 const inquirer = require('inquirer');
 const mysql = require("mysql2");
 const connection = require('./db/connection');
+const cTable = require('console.table');
 
 const teamPrompt = () => {
     inquirer.prompt([
@@ -53,16 +54,39 @@ const teamPrompt = () => {
 }
 
 function viewDepartments() {
+<<<<<<< HEAD
     console.log('View All Departments\n')
     const sql = `SELECT * FROM department;`
+=======
+    const select = `SELECT * FROM department`;
+    connection.query(select, (error, response) => {
+        if (error) throw error;
+        console.table(response);
+        teamPrompt();
+    })
+>>>>>>> 8eb7da9 (update)
 }
 
 function viewRoles() {
-
+    const select = `SELECT role.id,
+    role.title,
+    department.name AS department,
+    role.salary
+    FROM role`;
+    connection.query(select, (error, response) => {
+        if (error) throw error;
+        console.table(response);
+        teamPrompt();
+    })
 }
 
 function viewEmployees() {
-
+    const select = `SELECT * FROM employee`;
+    connection.query(select, (error, response) => {
+        if (error) throw error;
+        console.table(response);
+        teamPrompt();
+    })
 }
 
 function addDepartment() {
