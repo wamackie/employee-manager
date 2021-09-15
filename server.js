@@ -72,7 +72,8 @@ function viewRoles() {
     role.title,
     department.name AS department,
     role.salary
-    FROM role`;
+    FROM role
+    LEFT JOIN department on role.department_id = department.id`;
     connection.query(select, (error, response) => {
         if (error) throw error;
         console.table(response);
@@ -81,7 +82,17 @@ function viewRoles() {
 }
 
 function viewEmployees() {
-    const select = `SELECT * FROM employee`;
+    const select = `SELECT employee.id,
+    employee.first_name,
+    employee.last_name,
+    role.title AS job_title,
+    department.name AS department,
+    role.salary AS salary,
+    CONCAT(manager.first_name, ' ', manager.last_name) AS Manager
+    FROM employee
+    LEFT JOIN role on employee.role_id = role.id
+    LEFT JOIN department on role.department_id = department.id
+    LEFT JOIN employee manager on manager.id = employee.manager_id`;
     connection.query(select, (error, response) => {
         if (error) throw error;
         console.table(response);
@@ -90,11 +101,51 @@ function viewEmployees() {
 }
 
 function addDepartment() {
-
+    inquirer.prompt([
+        {
+            name: 'department',
+            type: 'input',
+            message: 'Enter department name',
+        }
+    ])
+    .then(response => {
+        connection.query(`INSERT INTO department (name) values (?);`, response.department, (err) => {
+            if (err) { throw err 
+            } else {
+                console.log('Success');
+                teamPrompt();
+            }
+        } )
+    })
 }
 
 function addRole() {
-
+    inquirer.prompt([
+        {
+            name: 'title',
+            type: 'input',
+            message: 'Enter role name',
+        },
+        {
+            name: 'salary',
+            type: 'input',
+            message: 'Enter the salary',
+        },
+        {
+            name: 'id',
+            type: 'input',
+            message: 'Enter the department_id'
+        }
+    ])
+    .then(response => {
+        connection.query(`INSERT INTO role (title, salary, department_id) values (?, ?, ?);`, [response.title, response.salary, response.id], (err) => {
+            if (err) { throw err
+            } else {
+                console.log('Success');
+                teamPrompt();
+            }
+        })
+    })
 }
 
 function addEmployee() {
