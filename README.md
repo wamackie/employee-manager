@@ -1,5 +1,8 @@
 ![badge](https://img.shields.io/badge/license-MIT-yellowgreen)
-# employee-manager
+
+<p align="center">
+    # Employee-Manager
+</p>
 This project uses Node, Inquirer, and MySQL to create a content management system (CMS) that allows the user to view and edit an employee database.
 
 ## Walkthrough Video
