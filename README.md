@@ -4,7 +4,7 @@
 This project uses Node, Inquirer, and MySQL to create a content management system (CMS) that allows the user to view and edit an employee database.
 
 ## Walkthrough Video
-
+[![Walkthrough](assets/images/screenshot.png)](https://drive.google.com/file/d/16wLT2TP3hZdz0_mU7CHA_SNOM4THhF9k/view "Walkthrough")
 
 ## Table of Contents
 * [Installation](#installation)
@@ -14,6 +14,7 @@ This project uses Node, Inquirer, and MySQL to create a content management syste
 * [Credits](#credits)
 
 ## Installation
+Install necessary depedencies then run "server js" in the terminal
 
 ## License
 This application uses the MIT license.
