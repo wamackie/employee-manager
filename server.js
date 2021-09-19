@@ -54,17 +54,12 @@ const teamPrompt = () => {
 }
 
 function viewDepartments() {
-<<<<<<< HEAD
-    console.log('View All Departments\n')
-    const sql = `SELECT * FROM department;`
-=======
     const select = `SELECT * FROM department`;
     connection.query(select, (error, response) => {
         if (error) throw error;
         console.table(response);
         teamPrompt();
     })
->>>>>>> 8eb7da9 (update)
 }
 
 function viewRoles() {
@@ -149,11 +144,41 @@ function addRole() {
 }
 
 function addEmployee() {
-
+    inquirer.prompt([
+        {
+            name: 'first_name',
+            type: 'input',
+            message: 'Enter first name',
+        },
+        {
+            name: 'last_name',
+            type: 'input',
+            message: 'Enter last name',
+        },
+        {
+            name: 'role_id',
+            type: 'input',
+            message: 'Enter role id',
+        },
+        {
+            name: 'manager_id',
+            type: 'input',
+            message: 'Enter manager id',
+        }
+    ])
+    .then(response => {
+        connection.query(`INSERT INTO employee (first_name, last_name, role_id, manager_id) values (?, ?, ?, ?);`, [response.first_name, response.last_name, response.role_id, response.manager_id], (err) => {
+            if (err) { throw err
+            } else {
+                console.log('Success');
+                teamPrompt();
+            }
+        })
+    })
 }
 
 function updateEmployeeRole() {
-    
+
 }
 
 

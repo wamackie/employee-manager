@@ -23,16 +23,16 @@ VALUES
     ('Chief Financial Officer', '80000', 5);
 
 INSERT INTO employee
-    (first_name, last_name, role_id)
+    (first_name, last_name, role_id, manager_id)
 VALUES
-    ('John', 'Marsh', 1),
-    ('Sarah', 'Trudeau', 2),
-    ('Jake', 'Clemons', 3),
-    ('Samuel', 'Clinton', 4),
-    ('Laura', 'Stevens', 5),
-    ('Mike', 'Mercer', 6),
-    ('Ken', 'Sloane', 7),
-    ('Leeroy', 'Carmichael', 8),
-    ('JJ', 'Stewart', 9),
-    ('Brianna', 'Maven', 10),
-    ('Maggie', 'Walkens', 11);
+    ('John', 'Marsh', 1, null),
+    ('Sarah', 'Trudeau', 2, null),
+    ('Jake', 'Clemons', 3, null),
+    ('Samuel', 'Clinton', 4, null),
+    ('Laura', 'Stevens', 5, null),
+    ('Mike', 'Mercer', 6, null),
+    ('Ken', 'Sloane', 7, null),
+    ('Leeroy', 'Carmichael', 8, null),
+    ('JJ', 'Stewart', 9, null),
+    ('Brianna', 'Maven', 10, null),
+    ('Maggie', 'Walkens', 11, null);
