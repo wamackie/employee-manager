@@ -2,6 +2,7 @@ const inquirer = require('inquirer');
 const mysql = require("mysql2");
 const connection = require('./db/connection');
 const cTable = require('console.table');
+const { listenerCount } = require('./db/connection');
 
 const teamPrompt = () => {
     inquirer.prompt([
@@ -178,7 +179,66 @@ function addEmployee() {
 }
 
 function updateEmployeeRole() {
-
+    connection.query(`SELECT * FROM employee;`, (error, response) => {
+        if (error) throw error;
+    inquirer.prompt([
+        {
+            name: 'employee_name',
+            type: 'list',
+            message: 'Choose employee to update',
+            choices() {
+                const choicesList = [];
+                for (let i = 0; i < response.length; i++){
+                    choicesList.push(`${response[i].first_name} ${response[i].last_name}`)
+                }
+                return choicesList;
+            },
+        }
+    ])
+    .then(response => {
+        connection.query(`SELECT id FROM employee WHERE CONCAT (first_name,' ', last_name) = ?`, response.employee_name, (err, res) => {
+            if (err) { throw err
+            } else {
+                let employeeId = JSON.stringify(res[0].id)
+                connection.query(`SELECT * FROM role`, (err, data) => {
+                    if (err) throw err;
+                    inquirer.prompt([
+                        {
+                            name: 'new_role',
+                            message: 'What is the new employee role?',
+                            type: 'list',
+                            choices() {
+                                const rolesList = [];
+                                for (let i=0; i<data.length; i++){
+                                    rolesList.push(data[i].title)
+                                }
+                                return rolesList;
+                            }
+                        }
+                    ])
+                    .then(result => {
+                        console.log(result)
+                        connection.query(`SELECT id FROM role WHERE title=?`, result.new_role, (err, data) => {
+                            if (err) { throw err
+                            } else {
+                                let roleId = JSON.stringify(data[0].id)
+                                // the query that UPDATEs the employee role id using employeeId and roleID
+                                connection.query(`UPDATE employee SET role_id = ? WHERE id = ?`, [roleId, employeeId], (err) => {
+                                    if (err) {throw err
+                                    }
+                                    console.log('success')
+                                    teamPrompt();
+                                })
+                            }
+                        })
+                    })
+                
+                })
+            }
+        })
+        })
+    
+    })
 }
 
 
